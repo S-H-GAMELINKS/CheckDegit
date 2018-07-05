@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <array>
 #include <cmath>
 
 //番号読み取り関数
@@ -17,36 +18,41 @@ std::vector<std::string> NumberRead(std::vector<std::string> Num){
     return Num;
 }
 
+void NumberDraw(std::array<int, 12> Degit, std::string Num){
+
+    //チェックデジット計算変数
+    int temp = 0;
+
+    //番号を一桁ずつ格納
+    for(int i = 0; i < 12; i++)
+        Degit[i] = static_cast<int>(Num[i]) - 48;
+
+    //桁数分、チェックデジット用の計算を行う
+    for(int j = 0; j < 12; j++){
+        if((j + 1) % 2 == 0){
+            if((Degit[j] * 2) > 9)
+                temp += (((Degit[j] * 2) % 10) + 1);
+            else
+                temp += (Degit[j] * 2);         
+        } else
+            temp += Degit[j];
+    }
+    int t = (10 - (temp % 10));
+    //番号とチェックデジットを表示
+    std::cout << Num << ((t == 10)? 0 : t) << std::endl;
+}
+
 //チェックデジット書き込み関数
 //NumberWrite
-void NumberWrite(const std::vector<std::string>){
+void NumberWrite(const std::vector<std::string> Num){
 
     //格納されている番号分だけループ
     for(auto&& d : Num){
 
         //番号を一時的に格納する変数
-        int digit[12];
+        std::array<int, 12> Degit;
 
-        //チェックデジット計算変数
-        int temp = 0;
-
-        //番号を一桁ずつ格納
-        for(int i = 0; i < 12; i++)
-            digit[i] = static_cast<int>(d[i]) - 48;
-
-        //桁数分、チェックデジット用の計算を行う
-        for(int j = 0; j < 12; j++){
-            if((j + 1) % 2 == 0){
-                if((digit[j] * 2) > 9)
-                    temp += (((digit[j] * 2) % 10) + 1);
-                else
-                    temp += (digit[j] * 2);         
-            } else
-                temp += digit[j];
-        }
-        int t = (10 - (temp % 10));
-        //番号とチェックデジットを表示
-        std::cout << d << ((t == 10)? 0 : t) << std::endl;
+        NumberDraw(Degit, d);
     }
 }
 
