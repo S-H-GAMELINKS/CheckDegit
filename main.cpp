@@ -18,14 +18,21 @@ std::vector<std::string> NumberRead(std::vector<std::string> Num){
     return Num;
 }
 
+template <typename T, std::size_t N>
+std::array<T, N> GetNumber(std::array<T, N> Degit, const std::string Num){
+    //番号を一桁ずつ格納
+    for(int i = 0; i < 12; i++)
+        Degit[i] = static_cast<int>(Num[i]) - 48;
+
+    return Degit;
+}
+
 void NumberDraw(std::array<int, 12> Degit, std::string Num){
 
     //チェックデジット計算変数
     int temp = 0;
 
-    //番号を一桁ずつ格納
-    for(int i = 0; i < 12; i++)
-        Degit[i] = static_cast<int>(Num[i]) - 48;
+    Degit = GetNumber(Degit, Num);
 
     //桁数分、チェックデジット用の計算を行う
     for(int j = 0; j < 12; j++){
