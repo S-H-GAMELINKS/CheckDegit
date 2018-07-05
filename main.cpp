@@ -7,6 +7,8 @@
 #include <array>
 #include <cmath>
 
+constexpr int Number = 12;
+
 //番号読み取り関数
 //NumberRead
 std::vector<std::string> NumberRead(std::vector<std::string> Num){
@@ -21,7 +23,7 @@ std::vector<std::string> NumberRead(std::vector<std::string> Num){
 template <typename T, std::size_t N>
 std::array<T, N> GetNumber(std::array<T, N> Degit, const std::string Num){
     //番号を一桁ずつ格納
-    for(int i = 0; i < 12; i++)
+    for(int i = 0; i < Number; i++)
         Degit[i] = static_cast<int>(Num[i]) - 48;
 
     return Degit;
@@ -34,7 +36,7 @@ auto CalcDegit(const std::array<T, N> Degit){
     int temp = 0;
 
     //桁数分、チェックデジット用の計算を行う
-    for(int j = 0; j < 12; j++){
+    for(int j = 0; j < Number; j++){
         if((j + 1) % 2 == 0){
             if((Degit[j] * 2) > 9)
                 temp += (((Degit[j] * 2) % 10) + 1);
@@ -47,7 +49,8 @@ auto CalcDegit(const std::array<T, N> Degit){
     return temp;
 }
 
-void NumberDraw(std::array<int, 12> Degit, std::string Num){
+template <typename T, std::size_t N>
+void NumberDraw(std::array<T, N> Degit, std::string Num){
 
     Degit = GetNumber(Degit, Num);
 
@@ -64,7 +67,7 @@ void NumberWrite(const std::vector<std::string> Num){
     for(auto&& d : Num){
 
         //番号を一時的に格納する変数
-        std::array<int, 12> Degit;
+        std::array<int, Number> Degit;
 
         NumberDraw(Degit, d);
     }
