@@ -27,12 +27,11 @@ std::array<T, N> GetNumber(std::array<T, N> Degit, const std::string Num){
     return Degit;
 }
 
-void NumberDraw(std::array<int, 12> Degit, std::string Num){
+template <typename T, std::size_t N>
+auto CalcDegit(const std::array<T, N> Degit){
 
     //チェックデジット計算変数
     int temp = 0;
-
-    Degit = GetNumber(Degit, Num);
 
     //桁数分、チェックデジット用の計算を行う
     for(int j = 0; j < 12; j++){
@@ -44,7 +43,15 @@ void NumberDraw(std::array<int, 12> Degit, std::string Num){
         } else
             temp += Degit[j];
     }
-    int t = (10 - (temp % 10));
+
+    return temp;
+}
+
+void NumberDraw(std::array<int, 12> Degit, std::string Num){
+
+    Degit = GetNumber(Degit, Num);
+
+    int t = (10 - (CalcDegit(Degit) % 10));
     //番号とチェックデジットを表示
     std::cout << Num << ((t == 10)? 0 : t) << std::endl;
 }
