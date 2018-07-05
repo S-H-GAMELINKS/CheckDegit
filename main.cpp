@@ -6,21 +6,20 @@
 #include <string>
 #include <cmath>
 
-//番号格納配列
-std::vector<std::string> Num;
-
 //番号読み取り関数
 //NumberRead
-void NumberRead(){
+std::vector<std::string> NumberRead(std::vector<std::string> Num){
     
     //カード番号を配列に格納
     for(std::string num; std::getline(std::cin, num); )
         Num.emplace_back(std::move(num));
+
+    return Num;
 }
 
 //チェックデジット書き込み関数
 //NumberWrite
-void NumberWrite(){
+void NumberWrite(const std::vector<std::string>){
 
     //格納されている番号分だけループ
     for(auto&& d : Num){
@@ -52,12 +51,15 @@ void NumberWrite(){
 }
 
 int main(){
+
+    //番号格納配列
+    std::vector<std::string> Num;
     
     //番号データ読み取り
-    NumberRead();
+    Num = NumberRead(Num);
 
     //チェックデジットを計算し表示
-    NumberWrite();
+    NumberWrite(Num);
 
     return 0;
 }
